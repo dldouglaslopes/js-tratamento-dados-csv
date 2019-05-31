@@ -1,7 +1,7 @@
 const lineReader = require('line-reader');
 let count = 0;
 const headers = [];
-let groups = [];
+const groups = [];
 let arrays = [];
 let symbols = new Set();
 
@@ -33,8 +33,10 @@ lineReader.eachLine('74200101.N18', function(line, last) {
             for (let index = 0; index < values.length; index++) {
                 const header = headers[index];
                 const size = symbol.length;
-                const headerSubStr = header.substring(0, size);
-                
+                let headerSubStr = header.substring(0, size);
+                if (!isNaN(parseInt(header.substring(size, size + 1), 10))) {
+                    headerSubStr = header.substring(0, size + 1);
+                }
                 if (symbol == headerSubStr) {
                     if (arrays[headerSubStr] == null) {
                         arrays[headerSubStr] = [];
@@ -56,7 +58,8 @@ lineReader.eachLine('74200101.N18', function(line, last) {
     }
     
     if ( last == true) {  // stop reading
-        console.log(groups);
+        console.log(groups['CH1']);
         return false; 
     }
 });
+
