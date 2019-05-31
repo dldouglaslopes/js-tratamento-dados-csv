@@ -32,6 +32,8 @@ lineReader.eachLine('ID840004_20171207_114744.wnd', function(line, last) {
             const symbol = headers[index].split('-')[0];
             if (arrays[symbol] == null) {
                 arrays[symbol] = [];
+                var keyValue = {channel: symbol};
+                arrays[symbol].push(keyValue)
             }
             var keyValue = {};
             keyValue[headers[index]] = values[index];
@@ -41,15 +43,12 @@ lineReader.eachLine('ID840004_20171207_114744.wnd', function(line, last) {
         }
 
         symbols.forEach(symbol => {
-            if (groups[symbol] == null) {
-                groups[symbol] = [];
-            }
-            groups[symbol].push(arrays[symbol]);
+            groups.push(arrays[symbol]);
         });
     }
     
     if ( last == true) {  // stop reading
-        console.log(groups['WS(1)'][0]);
+        console.log(groups);
         return false; 
     }
 });

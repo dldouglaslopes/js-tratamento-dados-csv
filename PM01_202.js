@@ -31,6 +31,8 @@ lineReader.eachLine('PM01_202.dat', function(line, last) {
             const header = headers[index].split('_').slice(0, -1).join("_");
             if (arrays[header] == null) {
                 arrays[header] = [];
+                var keyValue = {channel: symbol};
+                arrays[header].push(keyValue)
             }
             var keyValue = {};
             keyValue[headers[index]] = values[index];
@@ -39,15 +41,14 @@ lineReader.eachLine('PM01_202.dat', function(line, last) {
         }
 
         symbols.forEach(symbol => {
-            if (groups[symbol] == null) {
-                groups[symbol] = [];
-            }
-            groups[symbol].push(arrays[symbol]);
+            var keyValue = {};
+            keyValue[symbol] = arrays[symbol];
+            groups.push(keyValue[symbol]);
         });
     }
     
     if ( last == true) {  // stop reading
-        console.log(groups['AN_60_2']);
+        console.log(groups);
         return false; 
     }
 });

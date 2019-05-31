@@ -40,25 +40,26 @@ lineReader.eachLine('74200101.N18', function(line, last) {
                 if (symbol == headerSubStr) {
                     if (arrays[headerSubStr] == null) {
                         arrays[headerSubStr] = [];
+                        var keyValue = {channel: symbol};
+                        arrays[headerSubStr].push(keyValue)
                     }
                     var keyValue = {};
                     keyValue[header] = values[index];
-                    keyValue['Date & Time Stamp'] = values[0];
+                    keyValue["Date & Time Stamp"] = values[0];
                     arrays[headerSubStr].push(keyValue);
                 }
             }
         });
         
         symbols.forEach(symbol => {
-            if (groups[symbol] == null) {
-                groups[symbol] = [];
-            }
-            groups[symbol].push(arrays[symbol]);
+            var keyValue = {};
+            keyValue[symbol] = arrays[symbol];
+            groups.push(keyValue[symbol]);
         });
     }
     
     if ( last == true) {  // stop reading
-        console.log(groups['CH1']);
+        console.log(groups);
         return false; 
     }
 });

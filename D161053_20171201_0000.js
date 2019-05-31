@@ -26,6 +26,8 @@ fs.createReadStream('D161053_20171201_0000.csv')
                 if ((result[column] + '') !== 'undefined') {
                     if (arrays[symbol] == null) {
                         arrays[symbol] = [];
+                        var keyValue = {channel: symbol};
+                        arrays[symbol].push(keyValue)
                     }
                     var keyValue = {};
                     keyValue[column] = result[column];
@@ -35,11 +37,8 @@ fs.createReadStream('D161053_20171201_0000.csv')
             });
             
             symbols.forEach(symbol => { //get values of each symbol
-                if (groups[symbol] == null) {
-                    groups[symbol] = [];
-                }
-                groups[symbol].push(arrays[symbol]);
+                groups.push(arrays[symbol]);
             });
         });
-        console.log(groups['C3'][0]);
+        console.log(groups);
     });    
